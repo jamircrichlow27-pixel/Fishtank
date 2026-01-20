@@ -16,9 +16,9 @@ public class BasicGameApp implements Runnable, KeyListener {
     //Variable Definition Section
     //You can set their initial values too
     // Like Mario mario = new Mario(); //
-    Nemo nemo;
+    Nemo nemo; //characters in nemo
     Dory dory;
-    Bruce bruce;
+    Bruce bruce;// bruce is the shark who would eat them
     Image background;
 
 
@@ -30,13 +30,16 @@ public class BasicGameApp implements Runnable, KeyListener {
         //create (construct) the objects needed for the game
         nemo = new Nemo(500, 350, 5, 5, 100, 100);
         nemo.name = "Nemo";
-        nemo.aliveImage = Toolkit.getDefaultToolkit().getImage("Nemo.png");
-        nemo.deadImage = Toolkit.getDefaultToolkit().getImage("dead.png");
-        stephon = new StephonCastle(100, 200, 5, 5, 100, 100);
-        stephon.name = "Stephon Castle";
-        stephon.image = Toolkit.getDefaultToolkit().getImage("stephon castle.png");
+        nemo.aliveImage = Toolkit.getDefaultToolkit().getImage("Nemo.png");//alive image
+        nemo.deadImage = Toolkit.getDefaultToolkit().getImage("DeadNemo.png");// dead image
+        dory = new Dory(100, 200, 5, 5, 100, 100);
+        dory.name = "Dory";//this is dory
+        dory.image = Toolkit.getDefaultToolkit().getImage("Dory.jpeg");
+        bruce = new Bruce(300,200,5,5,200,200);
+        bruce.name = "Bruce";// this is bruce
+        bruce.image = Toolkit.getDefaultToolkit().getImage("Bruce.png");
 
-        background = Toolkit.getDefaultToolkit().getImage("Basketball_Court.png");
+        background = Toolkit.getDefaultToolkit().getImage("Sea.png");// background for fishtank
 
 
     }
@@ -44,20 +47,21 @@ public class BasicGameApp implements Runnable, KeyListener {
 
     public void moveThings() {
         //call the move() code for each object  -
-        cade.move();
-        stephon.move();
+        nemo.move();
+        dory.move();
+        bruce.move();
     }
 
     public void checkCollisions() {
-        System.out.println(cade.hitbox);
-        System.out.println(stephon.hitbox);
-        if (cade.hitbox.intersects(stephon.hitbox)) {
-            System.out.println("Cade hit Stephon");
-            cade.isAlive = false;
+        System.out.println(nemo.hitbox);
+        System.out.println(bruce.hitbox);
+        if (nemo.hitbox.intersects(bruce.hitbox)) {
+            System.out.println("Nemo hit Bruce");
+            nemo.isAlive = false;
         } else {
-            cade.isAlive = true;
+            nemo.isAlive = true;
         }
-    }
+    }// checks whenever nemo collides with bruce
 
     //Paints things on the screen using bufferStrategy
     private void render() {
@@ -67,12 +71,16 @@ public class BasicGameApp implements Runnable, KeyListener {
         //draw the images
         // Signature: drawImage(Image img, int x, int y, int width, int height, ImageObserver observer)
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
-        if (cade.isAlive) {
-            g.drawImage(cade.aliveImage, cade.xpos, cade.ypos, cade.width, cade.height, null);
+        if (nemo.isAlive) {
+            g.drawImage(nemo.aliveImage, nemo.xpos, nemo.ypos, nemo.width, nemo.height, null);
         } else {
-            g.drawImage(cade.deadImage, cade.xpos, cade.ypos, cade.width, cade.height, null);
+            g.drawImage(nemo.deadImage, nemo.xpos, nemo.ypos, nemo.width, nemo.height, null);
         }
-        g.drawImage(stephon.image, stephon.xpos, stephon.ypos, stephon.width, stephon.height, null);
+        g.drawImage(dory.image, dory.xpos, dory.ypos, dory.width, dory.height, null);
+
+        g.drawImage(bruce.image, bruce.xpos, bruce.ypos, bruce.width, bruce.height, null);
+        //draws the images so characters can show up
+
 
 
         // Keep the code below at the end of render()
@@ -159,19 +167,20 @@ public class BasicGameApp implements Runnable, KeyListener {
         System.out.println(e.getKeyCode());
         int key = e.getKeyCode();
 
-        if (key == 65) {cade.left = true;}//a
-        else if (key == 68) {cade.right = true;}//d
-        else if (key == 87) {cade.up = true;}//w
-        else if (key == 83) {cade.down = true;}//s
-    }
+        if (key == 65) {nemo.left = true;}//a
+        else if (key == 68) {nemo.right = true;}//d
+        else if (key == 87) {nemo.up = true;}//w
+        else if (key == 83) {nemo.down = true;}//s
+    }// able to click wasd to move nemo
 
     @Override
     public void keyReleased (KeyEvent e){
         int key = e.getKeyCode();
-        if (key == 65) {cade.left = false;}//a
-        else if (key == 68) {cade.right = false;}//d
-        else if (key == 87) {cade.up = false;}//w
-        else if (key == 83) {cade.down = false;}//s
+        if (key == 65) {nemo.left = false;}//a
+        else if (key == 68) {nemo.right = false;}//d
+        else if (key == 87) {nemo.up = false;}//w
+        else if (key == 83) {nemo.down = false;}//s
+        //helps control better
 
     }
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
